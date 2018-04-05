@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RavSoft.GoogleTranslator;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -13,7 +14,7 @@ namespace Telegrambot.Controllers
     {
 
         Telegram.Bot.TelegramBotClient Bot;
-
+        Translator Translate = new Translator();
         public WebhookController()
         {
             Bot = new Telegram.Bot.TelegramBotClient("438518161:AAG5xVKFbV4uLf_6CtbyocQhbBv7hHLyL5A");
@@ -26,6 +27,11 @@ namespace Telegrambot.Controllers
                 if (update.Message.Text == "/start")
                 {
                     await Bot.SendTextMessageAsync(update.Message.From.Id, "Welcome To My Bot");
+                }
+                else {
+
+                    string TranslateRequst = Translate.Translate(update.Message.Text, "Persian", "English" );
+                    await Bot.SendTextMessageAsync(update.Message.From.Id, TranslateRequst);
                 }
 
             }
